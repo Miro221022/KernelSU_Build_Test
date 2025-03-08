@@ -57,16 +57,6 @@ jobs:
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s v0.9.5
         KSU_VERSION=$(cd KernelSU && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
         echo "KSUVER=KSU_$KSU_VERSION" >> $GITHUB_ENV
-
-    - name: Clone SusFS Repository and Apply Patches
-      run: |
-       # Clone SusFS
-        git clone --depth=1 --branch v1.0.0 https://github.com/your-repo/SusFS.git $GITHUB_WORKSPACE/SusFS
-    
-       # Apply patches
-       cp ./kernel_patches/fs/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/common/fs/
-       cp ./kernel_patches/include/linux/* $GITHUB_WORKSPACE/kernel_workspace/android-kernel/common/include/linux/
-       patch -p1 < ./kernel_patches/50_add_susfs_in_kernel-5.4.286-qgki.patch
     
     - name: Build kernel
       run: |
